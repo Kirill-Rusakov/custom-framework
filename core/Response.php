@@ -2,7 +2,7 @@
 
 namespace PHPFramework;
 
-class Responce
+class Response
 {
     
 }

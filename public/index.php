@@ -12,14 +12,18 @@ require_once HELPERS . "/helpers.php";
 
 $app = new \PHPFramework\Application();
 
-dump($app);
-dump(app());
+require_once CONFIG . "/routes.php";
 
-dump(request() -> getMethod());
-dump(request() -> isGet());
-dump(request() -> isPost());
-dump(request() -> isAjax());
-dump(request() -> get('page'));
-dump(request() -> post('page'));
+$app -> run();
+
+// dump($app);
+// dump(app());
+
+// dump(request() -> getMethod());
+// dump(request() -> isGet());
+// dump(request() -> isPost());
+// dump(request() -> isAjax());
+// dump(request() -> get('page'));
+// dump(request() -> post('page'));
 
 dump(microtime(true) - $start_frame);
