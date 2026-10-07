@@ -8,7 +8,7 @@ class Request
 
     public function __construct($uri) {
         $this -> uri = trim(urldecode($uri), "/");
-        dump($this -> uri);
+        // dump($this -> uri);
     }
 
     public function getMethod():string {
@@ -34,6 +34,21 @@ class Request
 
     public function post($name, $default = null):?string {
         return $_POST[$name] ?? $default;
+    }
+
+    public function getPath():string {
+        return $this -> removeQueryString();
+    }
+
+    protected function removeQueryString():string {
+        // dump($this -> uri);
+
+        if($this -> uri) {
+            $params = explode('?', $this -> uri);
+            return trim($params[0], '/');
+        } else {
+            return "";
+        }
     }
 
 }

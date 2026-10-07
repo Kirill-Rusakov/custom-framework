@@ -27,7 +27,8 @@ class Router
             'path' => "/$path",
             'callback' => $callback,
             'middleware' => null,
-            'method' => $method
+            'method' => $method,
+            'needToken' => true
         ];
 
         return $this;
@@ -46,7 +47,37 @@ class Router
     }
 
     public function dispatch():mixed {
-        // call_user_func();
-        return 'test';
+        $path = $this -> request -> getPath();
+        $route = $this -> matchRoute($path);
+        if($route === false) {
+            $this -> response -> setResponseCode(404);
+            echo '404 - Page not found!';
+            die;
+        }
+        // dump($route);
+        if(is_array($route['callback'])) {
+            $route['callback'][0] = new $route['callback'][0];
+        }
+        // dump($route);
+        return call_user_func($route['callback']);
+    }
+
+    protected function matchRoute($path):mixed {
+        foreach($this -> routes as $route) {
+            if(preg_match("#^{$route['path']}$#i", "/{$path}", $matches) && in_array($this -> request -> getMethod(), $route['method'])) {
+                // dump($matches);
+                // dump($route);
+                // dump($this -> request -> getMethod());
+                foreach($matches as $key => $value) {
+                    if(is_string($key)) {
+                        $this -> routes_params[$key] = $value;
+                    }
+                }
+                return $route;
+            }
+
+        }
+
+        return false;
     }
 }
