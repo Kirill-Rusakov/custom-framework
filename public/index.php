@@ -16,14 +16,4 @@ require_once CONFIG . "/routes.php";
 
 $app -> run();
 
-// dump($app);
-// dump(app());
-
-// dump(request() -> getMethod());
-// dump(request() -> isGet());
-// dump(request() -> isPost());
-// dump(request() -> isAjax());
-// dump(request() -> get('page'));
-// dump(request() -> post('page'));
-
-dump(microtime(true) - $start_frame);
+// dump(microtime(true) - $start_frame);

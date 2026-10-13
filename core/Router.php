@@ -52,20 +52,15 @@ class Router
         if($route === false) {
             abort('Text 404 error');
         }
-        // dump($route);
         if(is_array($route['callback'])) {
             $route['callback'][0] = new $route['callback'][0];
         }
-        // dump($route);
         return call_user_func($route['callback']);
     }
 
     protected function matchRoute($path):mixed {
         foreach($this -> routes as $route) {
             if(preg_match("#^{$route['path']}$#i", "/{$path}", $matches) && in_array($this -> request -> getMethod(), $route['method'])) {
-                // dump($matches);
-                // dump($route);
-                // dump($this -> request -> getMethod());
                 foreach($matches as $key => $value) {
                     if(is_string($key)) {
                         $this -> routes_params[$key] = $value;
